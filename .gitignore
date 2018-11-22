@@ -1,0 +1,9 @@
+/*
+
+!libgpio.sh
+!README.md
+!.gitignore
+
+!tests
+tests/*
+!tests/test_core.sh
