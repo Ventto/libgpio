@@ -24,17 +24,35 @@ $ . libgpio.sh
 
 # Usage
 
-* In scripts:
+## Manually
 
+```bash
+$ cd /sys/class/gpio
+$ ls -l
+gpiochip224/
+[... truncated output...]
+
+$ cat gpiochip224/ngpio   # print 32, so 32 GPIOS provided by the gpiochip
+$ echo 230 > export       # export the GPIO n°6: 224 + 6
+                          # make the GPIO n°6 ready to use
+$ echo out > gpio230/direction   # set the direction
+$ echo 1 > gpio230/value         # set the GPIO n°6 high
+$ echo 230 > unexport            # release the GPIO
 ```
+
+## With libgpio
+
+```bash
 #!/bin/bash
 
 . libgpio.sh
 
-gpio_select_gpiochip 224   # select: /sys/class/gpio/gpiochip224
-gpio_count                 # return 32, so 32 GPIOs provided by the gpiochip
-gpio_export '0'            # make the GPIO n°0 ready to use
-gpio_set_value '0' '1'     # set the GPIO n°0 high
+gpio_select_gpiochip 224   # select `/sys/class/gpio/gpiochip224`
+gpio_count                 # print 32, so 32 GPIOs provided by the gpiochip
+gpio_export '6'            # make the GPIO n°6 ready to use
+gpio_direction_output '6'  # set the direction
+gpio_set_value '6' '1'     # set the GPIO n°6 high
+gpio_unexport '6'          # release the GPIO
 ```
 
 # Functions
